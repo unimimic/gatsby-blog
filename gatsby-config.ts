@@ -2,26 +2,52 @@ import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `gatsby-blog`,
-    siteUrl: `https://www.yourdomain.tld`
+    title: `unimimic-blog`,
+    siteUrl: `https://www.unimimic.github.io`
   },
-  // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
-  // If you use VSCode you can also use the GraphQL plugin
-  // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
-  plugins: ["gatsby-plugin-postcss", "gatsby-plugin-google-gtag", "gatsby-plugin-sitemap", {
-    resolve: 'gatsby-plugin-manifest',
-    options: {
-      "icon": "src/images/icon.png"
-    }
-  }, "gatsby-plugin-mdx", {
-    resolve: 'gatsby-source-filesystem',
-    options: {
-      "name": "pages",
-      "path": "./src/pages/"
+  plugins: [
+    "gatsby-plugin-postcss",
+    "gatsby-plugin-sitemap",
+    {
+      resolve: 'gatsby-plugin-manifest',
+      options: {
+        "icon": "src/images/icon.png"
+      }
     },
-    __key: "pages"
-  }]
+    "gatsby-transformer-remark",
+    {
+      resolve: "gatsby-plugin-sharp",
+      options: {
+        concurrency: 2, // 減少圖片處理的併行數量
+      },
+    },
+    {
+      resolve: "gatsby-plugin-mdx",
+      options: {
+        // remarkPlugins: [require(`remark-math`)],
+        // rehypePlugins: [require(`rehype-katex`)],
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          "gatsby-remark-katex",
+          {
+            resolve: "gatsby-remark-images",
+            options: {
+              maxWidth: 1200,
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "blog",
+        "path": "./content/posts/"
+      },
+      __key: "pages"
+    },
+  ]
 };
 
 export default config;
