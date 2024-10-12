@@ -27,12 +27,6 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: { id: string, frontmatter:
               Here, I share my thoughts on technology, design, and life. Feel free to explore and engage with my content!
             </p>
           </CardContent>
-          <CardFooter>
-            <Button>
-              Read Latest Post
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </CardFooter>
         </Card>
       </section>
       <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -53,22 +47,6 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: { id: string, frontmatter:
             </CardFooter>
           </Card>
         ))}
-      </section>
-      <section className="mt-12">
-        <Card>
-          <CardHeader>
-            <CardTitle>Subscribe to My Newsletter</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form className="flex space-x-2">
-              <Input type="email" placeholder="Enter your email" />
-              <Button type="submit">
-                Subscribe
-                <Mail className="ml-2 h-4 w-4" />
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
       </section>
     </Layout>
   )
