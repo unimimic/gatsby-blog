@@ -52,7 +52,7 @@ export default function TechWonderland() {
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
               className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text"
             >
-              Tech Wonderland
+              Dev Notes
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -60,7 +60,7 @@ export default function TechWonderland() {
               transition={{ delay: 0.5, duration: 0.5 }}
               className="text-xl md:text-2xl text-gray-600 mb-8"
             >
-              Embark on a journey through modern web development
+              Dive into the world of development 
             </motion.p>
           </div>
         </AnimatedSection>
@@ -68,23 +68,23 @@ export default function TechWonderland() {
 
       <AnimatedSection>
         <section id="about" className="py-20">
-          <h2 className="text-4xl font-bold text-center mb-8">About This Wonderland</h2>
+          <h2 className="text-4xl font-bold text-center mb-8">About This</h2>
           <Card>
             <CardHeader>
               <CardTitle>Discover the Magic</CardTitle>
-              <CardDescription>Uncover the secrets behind this digital playground</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="mb-4">
-                Step into a world where cutting-edge web technologies come to life! This site is not just a demonstration—it's an adventure through the realms of modern web development.
-              </p>
-              <p>
-                Whether you're a curious developer, a tech enthusiast, or just someone who appreciates beautiful and functional websites, you'll find something to marvel at here.
+                This is a dynamic website showcasing technology and the development process, aimed at helping developers share their learning and growth.
+                <br/>
+                <br/>
+                Explore various tech stacks and learn how to apply them in real-world projects.
               </p>
             </CardContent>
           </Card>
         </section>
       </AnimatedSection>
+
 
       <AnimatedSection>
         <section id="tech-stack" className="py-20">

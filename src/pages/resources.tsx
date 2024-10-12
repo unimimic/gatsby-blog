@@ -12,14 +12,13 @@ import { Search, ExternalLink, Code, Palette, Briefcase, BarChart, Laptop } from
 
 // 資源數據
 const resources = [
+  { name: "Refactoring.Guru", url: "https://refactoringguru.cn/", category: "Development", description: "學習代碼重構和設計模式的免費資源", icon: Code },
   { name: "GitHub", url: "https://github.com", category: "Development", description: "Version control and collaboration platform for developers", icon: Code },
   { name: "Stack Overflow", url: "https://stackoverflow.com", category: "Development", description: "Q&A platform for programmers", icon: Code },
   { name: "Figma", url: "https://www.figma.com", category: "Design", description: "Collaborative interface design tool", icon: Palette },
   { name: "Canva", url: "https://www.canva.com", category: "Design", description: "Graphic design platform for creating visual content", icon: Palette },
   { name: "Trello", url: "https://trello.com", category: "Productivity", description: "Web-based Kanban-style list-making application", icon: Briefcase },
   { name: "Notion", url: "https://www.notion.so", category: "Productivity", description: "All-in-one workspace for notes, tasks, wikis, and databases", icon: Briefcase },
-  { name: "Google Analytics", url: "https://analytics.google.com", category: "Marketing", description: "Web analytics service offered by Google", icon: BarChart },
-  { name: "Mailchimp", url: "https://mailchimp.com", category: "Marketing", description: "Marketing automation platform and email marketing service", icon: BarChart },
   { name: "opensourcealternative.to", url: "https://www.opensourcealternative.to/", category: "Development", description: "Discover 400+ popular open source alternatives", icon: Code },
   { name: "ChatGPT 指令", url: "https://www.explainthis.io/zh-hant/chatgpt?mibextid=tejx2t", category: "AI", description: "ChatGPT 指令大全", icon: Laptop },
   { name: "Elicit", url: "https://elicit.org/", category: "AI", description: "AI 搜尋、摘要論文服務", icon: Laptop },
@@ -41,8 +40,8 @@ const resources = [
   { name: "bootsnipp", url: "https://bootsnipp.com/", category: "Design", description: "Bootstrap程式片段", icon: Palette },
   { name: "grid.malven", url: "https://grid.malven.co/", category: "Design", description: "CSS Grid網格語法參考", icon: Palette },
   { name: "regex101", url: "https://regex101.com/", category: "Tools", description: "正則表示式線上產生器，可以用來測試正則表示式", icon: Laptop },
-  { name: "Looka", url: "https://looka.com/", category: "Tools", description: "協助生成Logo", icon: Laptop },
-  { name: "Ray.so", url: "http://ray.so/", category: "Tools", description: "將程式碼生成Instagram用圖片", icon: Laptop },
+  { name: "Looka", url: "https://looka.com/", category: "Design", description: "協助生成Logo", icon: Laptop },
+  { name: "Ray.so", url: "http://ray.so/", category: "Design", description: "將程式碼生成Instagram用圖片", icon: Laptop },
   { name: "RecordScreen.io", url: "https://recordscreen.io/", category: "Tools", description: "網頁版螢幕錄影工具", icon: Laptop },
   { name: "EmuOS", url: "https://emupedia.net/beta/emuos/", category: "Tools", description: "網頁版Windows模擬器，有提供很多懷舊應用程式", icon: Laptop },
   { name: "TWCERT/CC", url: "https://www.twcert.org.tw/", category: "Security", description: "我國企業資安事件通報及協處窗口", icon: Laptop },
@@ -66,7 +65,7 @@ const categoryIcons = {
   Security: Code,
   Design: Palette,
   Productivity: Briefcase,
-  Marketing: BarChart,
+  // Marketing: BarChart,
   All: Laptop
 }
 
