@@ -1,5 +1,9 @@
 import type { GatsbyConfig } from "gatsby";
 
+module.exports = {
+  pathPrefix: "/gatsby-blog",
+}
+
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `unimimic-blog`,
