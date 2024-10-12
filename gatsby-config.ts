@@ -1,10 +1,11 @@
 import type { GatsbyConfig } from "gatsby";
 
-module.exports = {
-  pathPrefix: "/gatsby-blog",
-}
+// module.exports = {
+//   pathPrefix: "/gatsby-blog",
+// }
 
 const config: GatsbyConfig = {
+  pathPrefix: "/gatsby-blog",
   siteMetadata: {
     title: `unimimic-blog`,
     siteUrl: `https://www.unimimic.github.io`
