@@ -3,10 +3,10 @@ import * as React from "react"
 // custom components for markdown content
 export const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className="text-4xl font-semibold mt-8 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700" {...props} />
+    <h1 className="text-4xl font-semibold mt-8 mb-4 pb-2 border-gray-200 dark:border-gray-700" {...props} />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="text-3xl font-semibold mt-8 mb-4 pb-2 border-b border-gray-200 dark:border-gray-700" {...props} />
+    <h2 className="text-3xl font-semibold mt-8 mb-4 pb-2 border-gray-200 dark:border-gray-700" {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h3 className="text-2xl font-semibold mt-6 mb-3" {...props} />
