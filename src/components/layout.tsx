@@ -22,7 +22,7 @@ const Layout = ({ pageTitle, children }: { pageTitle: string, children: React.Re
       </main>
       <footer className="bg-gray-800 text-white py-8 mt-20">
         <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2024 unimimic. All rights reserved.</p>
+          <p>&copy; 2024 D.N. All rights reserved.</p>
         </div>
       </footer>
       {/* <footer className="bg-white dark:bg-gray-800 shadow mt-12">
