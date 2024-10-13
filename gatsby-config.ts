@@ -1,7 +1,7 @@
 import type { GatsbyConfig } from "gatsby";
 
 const config: GatsbyConfig = {
-  pathPrefix: "/gatsby-blog",
+  pathPrefix: "/",
   siteMetadata: {
     title: "D.N.",
     siteUrl: "https://www.unimimic.github.io",

@@ -160,4 +160,4 @@ const ResourcesPage: React.FC<PageProps> = () => {
 
 export default ResourcesPage
 
-export const Head: HeadFC = () => <SEO title="Web Resources" />
+export const Head: HeadFC = () => <SEO title="D.N. Resources" />

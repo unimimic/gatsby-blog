@@ -107,4 +107,4 @@ export const query = graphql`
 
 export default BlogPage
 
-export const Head: HeadFC = () => <SEO title="Blog" />
+export const Head: HeadFC = () => <SEO title="D.N. Blog" />

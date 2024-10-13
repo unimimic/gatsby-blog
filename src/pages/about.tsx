@@ -168,4 +168,4 @@ const AboutPage = () => {
 
 export default AboutPage
 
-export const Head: HeadFC = () => <SEO title="About" />
+export const Head: HeadFC = () => <SEO title="D.N. About" />
