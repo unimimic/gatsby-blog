@@ -41,7 +41,7 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data
   const extractContentDir = (filePath: string): string => {
     // 使用正規表達式來從路徑中提取資料夾名稱
     const match = filePath.match(/\/([^/]+)\/[^/]+$/);
-    return match ? match[1] : '';
+    return match ? match[1].toLowerCase() : '';
   }
 
   const sortedYears = Object.keys(groupPostsByYear(data.allMdx.nodes)).sort((a, b) => parseInt(b) - parseInt(a))
