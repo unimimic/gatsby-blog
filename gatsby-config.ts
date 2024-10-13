@@ -12,6 +12,14 @@ const config: GatsbyConfig = {
     "gatsby-plugin-postcss",
     "gatsby-plugin-sitemap",
     {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [
+          "G-YRQ273VWPD", // Google Analytics / GA
+        ],
+      }
+    },
+    {
       resolve: 'gatsby-plugin-manifest',
       options: {
         "icon": "src/images/icon.png"
