@@ -7,11 +7,36 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription }
 import { Button } from "@/components/ui/button"
 import { Link } from "gatsby"
 
-const BlogPage: React.FC<PageProps<{ allMdx: { nodes: { id: string, frontmatter: { title: string, date: string } }[] } }>> = ({ data }) => {
-  // 檢查 data 或 nodes 是否存在
-  if (!data || !data.allMdx || !data.allMdx.nodes) {
-    return <p>No data found</p>;
+interface BlogPost {
+  id: string
+  frontmatter: {
+    title: string
+    date: string
   }
+}
+
+interface GroupedPosts {
+  [year: string]: BlogPost[]
+}
+
+const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data }) => {
+  if (!data || !data.allMdx || !data.allMdx.nodes) {
+    return <p>No data found</p>
+  }
+
+  const groupPostsByYear = (posts: BlogPost[]): GroupedPosts => {
+    return posts.reduce((acc, post) => {
+      const year = new Date(post.frontmatter.date).getFullYear().toString()
+      if (!acc[year]) {
+        acc[year] = []
+      }
+      acc[year].push(post)
+      return acc
+    }, {} as GroupedPosts)
+  }
+
+  const sortedYears = Object.keys(groupPostsByYear(data.allMdx.nodes)).sort((a, b) => parseInt(b) - parseInt(a))
+  const groupedPosts = groupPostsByYear(data.allMdx.nodes)
 
   return (
     <Layout pageTitle="">
@@ -27,28 +52,33 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: { id: string, frontmatter:
           </CardContent>
         </Card>
       </section>
-      <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {data.allMdx.nodes.map((post) => (
-          <Card key={post.id} className="flex flex-col">
-            <CardHeader className="flex-1">
-              <CardTitle>{post.frontmatter.title}</CardTitle>
-              <CardDescription>{post.frontmatter.date}</CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Link to={`/blog-post/${post.id}`}> {/* 使用 Link 組件包裹按鈕 */}
-                <Button variant="outline">Read More</Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
-      </section>
+      {sortedYears.map((year) => (
+        <section key={year} className="mb-12">
+          <h2 className="text-2xl font-bold mb-6">{year}</h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {groupedPosts[year].map((post) => (
+              <Card key={post.id} className="flex flex-col">
+                <CardHeader className="flex-1 flex flex-col gap-1">
+                  <CardTitle>{post.frontmatter.title}</CardTitle>
+                  <CardDescription>{post.frontmatter.date}</CardDescription>
+                </CardHeader>
+                <CardFooter>
+                  <Link to={`/blog-post/${post.id}`}>
+                    <Button variant="outline">Read More</Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </section>
+      ))}
     </Layout>
   )
 }
 
 export const query = graphql`
   query {
-    allMdx {
+    allMdx(sort: {frontmatter: {date: DESC}}) {
       nodes {
         frontmatter {
           date(formatString: "MMMM D, YYYY")
