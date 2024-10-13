@@ -7,8 +7,8 @@ import type { GatsbyConfig } from "gatsby";
 const config: GatsbyConfig = {
   pathPrefix: "/gatsby-blog",
   siteMetadata: {
-    title: `unimimic-blog`,
-    siteUrl: `https://www.unimimic.github.io`
+    title: "D.N.",
+    siteUrl: "https://www.unimimic.github.io"
   },
   graphqlTypegen: true,
   plugins: [
