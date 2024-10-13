@@ -74,7 +74,7 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data
                     <CardDescription>{post.frontmatter.date}</CardDescription>
                   </CardHeader>
                   <CardFooter>
-                    <Link to={`/blog-post/${contentDir}`}>
+                    <Link to={`/posts/${contentDir}`}>
                       <Button variant="outline">Read More</Button>
                     </Link>
                   </CardFooter>

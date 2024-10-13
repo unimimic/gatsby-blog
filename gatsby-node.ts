@@ -31,7 +31,7 @@ exports.createPages = async ({ graphql, actions }: { graphql: any, actions: any 
     const contentDir = path.basename(path.dirname(node.internal.contentFilePath));
 
     createPage({
-      path: `/blog-post/${contentDir}`,
+      path: `/posts/${contentDir}`,
       component: `${postTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
       context: {
         id: node.id,
