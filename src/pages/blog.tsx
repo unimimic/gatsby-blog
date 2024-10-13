@@ -13,6 +13,9 @@ interface BlogPost {
     title: string
     date: string
   }
+  internal: {
+    contentFilePath: string
+  }
 }
 
 interface GroupedPosts {
@@ -33,6 +36,12 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data
       acc[year].push(post)
       return acc
     }, {} as GroupedPosts)
+  }
+
+  const extractContentDir = (filePath: string): string => {
+    // 使用正規表達式來從路徑中提取資料夾名稱
+    const match = filePath.match(/\/([^/]+)\/[^/]+$/);
+    return match ? match[1] : '';
   }
 
   const sortedYears = Object.keys(groupPostsByYear(data.allMdx.nodes)).sort((a, b) => parseInt(b) - parseInt(a))
@@ -56,19 +65,22 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data
         <section key={year} className="mb-12">
           <h2 className="text-2xl font-bold mb-6">{year}</h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {groupedPosts[year].map((post) => (
-              <Card key={post.id} className="flex flex-col">
-                <CardHeader className="flex-1 flex flex-col gap-1">
-                  <CardTitle>{post.frontmatter.title}</CardTitle>
-                  <CardDescription>{post.frontmatter.date}</CardDescription>
-                </CardHeader>
-                <CardFooter>
-                  <Link to={`/blog-post/${post.id}`}>
-                    <Button variant="outline">Read More</Button>
-                  </Link>
-                </CardFooter>
-              </Card>
-            ))}
+            {groupedPosts[year].map((post) => {
+              const contentDir = extractContentDir(post.internal.contentFilePath)
+              return (
+                <Card key={post.id} className="flex flex-col">
+                  <CardHeader className="flex-1 flex flex-col gap-1">
+                    <CardTitle>{post.frontmatter.title}</CardTitle>
+                    <CardDescription>{post.frontmatter.date}</CardDescription>
+                  </CardHeader>
+                  <CardFooter>
+                    <Link to={`/blog-post/${contentDir}`}>
+                      <Button variant="outline">Read More</Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              )
+            })}
           </div>
         </section>
       ))}
@@ -85,6 +97,9 @@ export const query = graphql`
           title
         }
         id
+        internal {
+          contentFilePath
+        }
       }
     }
   }
