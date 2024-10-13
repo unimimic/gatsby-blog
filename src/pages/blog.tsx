@@ -3,7 +3,7 @@ import type { HeadFC, PageProps } from "gatsby"
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 import { graphql } from 'gatsby'
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Link } from "gatsby"
 
@@ -29,15 +29,11 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: { id: string, frontmatter:
       </section>
       <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {data.allMdx.nodes.map((post) => (
-          <Card key={post.id}>
-            <CardHeader>
+          <Card key={post.id} className="flex flex-col">
+            <CardHeader className="flex-1">
               <CardTitle>{post.frontmatter.title}</CardTitle>
+              <CardDescription>{post.frontmatter.date}</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 dark:text-gray-300">
-                {post.frontmatter.title}
-              </p>
-            </CardContent>
             <CardFooter>
               <Link to={`/blog-post/${post.id}`}> {/* 使用 Link 組件包裹按鈕 */}
                 <Button variant="outline">Read More</Button>
