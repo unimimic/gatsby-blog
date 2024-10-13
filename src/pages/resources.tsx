@@ -3,12 +3,12 @@ import { useState } from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import { motion } from "framer-motion"
 import Layout from "../components/layout"
-import Seo from '../components/seo'
+import { SEO } from "../components/seo"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
-import { Search, ExternalLink, Code, Palette, Briefcase, BarChart, Laptop } from "lucide-react"
+import { Search, ExternalLink, Code, Palette, Briefcase, Laptop } from "lucide-react"
 
 // 資源數據
 const resources = [
@@ -160,4 +160,4 @@ const ResourcesPage: React.FC<PageProps> = () => {
 
 export default ResourcesPage
 
-export const Head: HeadFC = () => <Seo title="Useful Web Resources" />
+export const Head: HeadFC = () => <SEO title="Web Resources" />

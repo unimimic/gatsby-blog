@@ -1,20 +1,27 @@
-import * as React from 'react'
-import { graphql, useStaticQuery } from 'gatsby'
+import React from "react"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
 
-const Seo = ({ title }: { title: string }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
-
-  return (
-    <title>{title} | {data.site.siteMetadata.title}</title>
-  )
+interface SEOProps {
+  title?: string;
+  description?: string;
+  pathname?: string;
+  children?: React.ReactNode;
 }
 
-export default Seo
+export const SEO: React.FC<SEOProps> = ({ title, description, pathname, children }) => {
+  const { title: defaultTitle, description: defaultDescription, siteUrl } = useSiteMetadata()
+
+  const seo = {
+    title: title || defaultTitle,
+    description: description || defaultDescription,
+    url: `${siteUrl}${pathname || ``}`,
+  }
+
+  return (
+    <>
+      <title>{seo.title}</title>
+      <meta name="description" content={seo.description} />
+      {children}
+    </>
+  )
+}

@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Github, Linkedin } from "lucide-react"
 import { Button } from '@/components/ui/button'
 import { Badge } from "@/components/ui/badge"
+import { SEO } from '@/components/seo'
+import { HeadFC } from 'gatsby'
 
 // const MyProjects = [
 //   {
@@ -165,3 +167,5 @@ const AboutPage = () => {
 }
 
 export default AboutPage
+
+export const Head: HeadFC = () => <SEO title="About" />

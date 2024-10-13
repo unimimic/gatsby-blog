@@ -1,8 +1,9 @@
 import * as React from "react"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { motion, useInView } from "framer-motion"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Layout from "@/components/layout"
+import { SEO } from "../components/seo"
+import { HeadFC } from "gatsby"
 
 const TechCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
   <motion.div
@@ -40,7 +41,7 @@ const AnimatedSection: React.FC<{ children: React.ReactNode }> = ({ children }) 
   );
 };
 
-export default function TechWonderland() {
+const IndexPage = () => {
   return (
     <Layout pageTitle="Welcome to My Dynamic Tech Showcase">
       <section id="hero" className="min-h-screen flex items-center justify-center">
@@ -116,3 +117,7 @@ export default function TechWonderland() {
     </Layout>
   );
 }
+
+export default IndexPage
+
+export const Head: HeadFC = () => <SEO/>

@@ -1,12 +1,10 @@
 import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
 import Layout from "../components/layout"
-import Seo from '../components/seo'
+import { SEO } from "../components/seo"
 import { graphql } from 'gatsby'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Mail } from "lucide-react"
 import { Link } from "gatsby"
 
 const BlogPage: React.FC<PageProps<{ allMdx: { nodes: { id: string, frontmatter: { title: string, date: string } }[] } }>> = ({ data }) => {
@@ -68,4 +66,4 @@ export const query = graphql`
 
 export default BlogPage
 
-export const Head: HeadFC = () => <Seo title="Blog Page" />
+export const Head: HeadFC = () => <SEO title="Blog" />

@@ -1,14 +1,11 @@
 import type { GatsbyConfig } from "gatsby";
 
-// module.exports = {
-//   pathPrefix: "/gatsby-blog",
-// }
-
 const config: GatsbyConfig = {
   pathPrefix: "/gatsby-blog",
   siteMetadata: {
     title: "D.N.",
-    siteUrl: "https://www.unimimic.github.io"
+    siteUrl: "https://www.unimimic.github.io",
+    description: "Dev Notes",
   },
   graphqlTypegen: true,
   plugins: [
