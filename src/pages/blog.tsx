@@ -3,6 +3,7 @@ import type { HeadFC, PageProps } from "gatsby"
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 import { graphql } from 'gatsby'
+import { useTranslation } from "gatsby-plugin-react-i18next"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Link } from "gatsby"
@@ -23,6 +24,8 @@ interface GroupedPosts {
 }
 
 const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data }) => {
+  const { t } = useTranslation()
+  
   if (!data || !data.allMdx || !data.allMdx.nodes) {
     return <p>No data found</p>
   }
@@ -48,15 +51,15 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data
   const groupedPosts = groupPostsByYear(data.allMdx.nodes)
 
   return (
-    <Layout pageTitle="">
+    <Layout pageTitle={t('blog.title')}>
       <section className="mb-12">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Welcome to My Blog</CardTitle>
+            <CardTitle>{t('blog.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-gray-600 dark:text-gray-300">
-              Here, I share my thoughts on technology, design, and life. Feel free to explore and engage with my content!
+              {t('blog.description')}
             </p>
           </CardContent>
         </Card>
@@ -71,11 +74,11 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data
                 <Card key={post.id} className="flex flex-col">
                   <CardHeader className="flex-1 flex flex-col gap-1">
                     <CardTitle className="tracking-wide leading-5">{post.frontmatter.title}</CardTitle>
-                    <CardDescription>{post.frontmatter.date}</CardDescription>
+                    <CardDescription>{t('blog.publishedOn')} {post.frontmatter.date}</CardDescription>
                   </CardHeader>
                   <CardFooter>
                     <Link to={`/posts/${contentDir}`}>
-                      <Button variant="outline">Read More</Button>
+                      <Button variant="outline">{t('blog.readMore')}</Button>
                     </Link>
                   </CardFooter>
                 </Card>
@@ -89,7 +92,16 @@ const BlogPage: React.FC<PageProps<{ allMdx: { nodes: BlogPost[] } }>> = ({ data
 }
 
 export const query = graphql`
-  query {
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
     allMdx(
       sort: {frontmatter: {date: DESC}}
       filter: { internal: { contentFilePath: { regex: "/content/posts/" } } }

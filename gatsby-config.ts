@@ -9,6 +9,42 @@ const config: GatsbyConfig = {
   },
   graphqlTypegen: true,
   plugins: [
+    {
+      resolve: `gatsby-plugin-react-i18next`,
+      options: {
+        localeJsonSourceName: `locale`, // name given to `gatsby-source-filesystem` plugin.
+        languages: [`en`, `zh`],
+        defaultLanguage: `zh`,
+        // if you are using Helmet, you must include siteUrl, and make sure you add http:https
+        siteUrl: `https://www.unimimic.github.io`,
+        // you can pass any i18next options
+        i18nextOptions: {
+          interpolation: {
+            escapeValue: false // not needed for react as it escapes by default
+          },
+          keySeparator: '.',
+          nsSeparator: ':'
+        },
+        pages: [
+          {
+            matchPath: '/:lang?/blog/:uid',
+            getLanguageFromPath: true,
+            excludeLanguages: ['es']
+          },
+          {
+            matchPath: '/preview',
+            languages: ['en']
+          }
+        ]
+      }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/src/locales`,
+        name: `locale`
+      }
+    },
     "gatsby-plugin-postcss",
     "gatsby-plugin-sitemap",
     {

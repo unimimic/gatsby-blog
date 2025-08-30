@@ -59,6 +59,10 @@ exports.createPages = async ({ graphql, actions }: { graphql: any, actions: any 
   const notionDir = path.resolve('./content/notion/');
   buildFileNameMapping(notionDir);
   
+  // 支援的語言
+  const languages = ['zh', 'en']
+  const defaultLanguage = 'zh'
+  
   const { data } = await graphql(`
     query GetAllMdx {
       allMdx {
@@ -80,33 +84,44 @@ exports.createPages = async ({ graphql, actions }: { graphql: any, actions: any 
       return;
     }
     
-    // 判斷是否為 notion 筆記
-    if (filePath.includes('/content/notion/') && filePath.endsWith('.md')) {
-      // 為 notion 筆記創建頁面
-      const fileName = path.basename(filePath, '.md');
-      const slug = cleanFileName(fileName);
-      
-      createPage({
-        path: `/notes/${slug}`,
-        component: `${notionTemplate}?__contentFilePath=${filePath}`,
-        context: {
-          id: node.id,
-          originalFileName: fileName,
-          fileNameMapping: Object.fromEntries(fileNameMapping), // 將映射表傳遞給模板
-        },
-      })
-    } else if (filePath.includes('/content/posts/')) {
-      // 為一般 blog posts 創建頁面
-      const contentDir = path.basename(path.dirname(filePath));
-      const lowercaseContentDir = contentDir.toLowerCase();
+    // 為每種語言創建頁面
+    languages.forEach(language => {
+      // 判斷是否為 notion 筆記
+      if (filePath.includes('/content/notion/') && filePath.endsWith('.md')) {
+        // 為 notion 筆記創建頁面
+        const fileName = path.basename(filePath, '.md');
+        const slug = cleanFileName(fileName);
+        
+        // 創建中文版本（預設路徑）和英文版本
+        const pagePath = language === defaultLanguage ? `/notes/${slug}` : `/${language}/notes/${slug}`
+        
+        createPage({
+          path: pagePath,
+          component: `${notionTemplate}?__contentFilePath=${filePath}`,
+          context: {
+            id: node.id,
+            originalFileName: fileName,
+            fileNameMapping: Object.fromEntries(fileNameMapping), // 將映射表傳遞給模板
+            language: language,
+          },
+        })
+      } else if (filePath.includes('/content/posts/')) {
+        // 為一般 blog posts 創建頁面
+        const contentDir = path.basename(path.dirname(filePath));
+        const lowercaseContentDir = contentDir.toLowerCase();
+        
+        // 創建中文版本（預設路徑）和英文版本
+        const pagePath = language === defaultLanguage ? `/posts/${lowercaseContentDir}` : `/${language}/posts/${lowercaseContentDir}`
 
-      createPage({
-        path: `/posts/${lowercaseContentDir}`,
-        component: `${postTemplate}?__contentFilePath=${filePath}`,
-        context: {
-          id: node.id,
-        },
-      })
-    }
+        createPage({
+          path: pagePath,
+          component: `${postTemplate}?__contentFilePath=${filePath}`,
+          context: {
+            id: node.id,
+            language: language,
+          },
+        })
+      }
+    })
   })
 };

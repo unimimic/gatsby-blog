@@ -3,6 +3,7 @@ import type { HeadFC, PageProps } from "gatsby"
 import Layout from "../components/layout"
 import { SEO } from "../components/seo"
 import { graphql } from 'gatsby'
+import { useTranslation } from "gatsby-plugin-react-i18next"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Link } from "gatsby"
@@ -21,6 +22,8 @@ interface Note {
 }
 
 const NotesPage: React.FC<PageProps<{ allMdx: { nodes: Note[] } }>> = ({ data }) => {
+  const { t } = useTranslation()
+  
   if (!data || !data.allMdx || !data.allMdx.nodes) {
     return <p>No notes found</p>
   }
@@ -56,15 +59,15 @@ const NotesPage: React.FC<PageProps<{ allMdx: { nodes: Note[] } }>> = ({ data })
   })
 
   return (
-    <Layout pageTitle="">
+    <Layout pageTitle={t('notes.title')}>
       <section className="mb-12">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>📝 My Notes</CardTitle>
+            <CardTitle>📝 {t('notes.title')}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-gray-600 dark:text-gray-300">
-              包含各種技術筆記、想法和心得。歡迎瀏覽！
+              {t('notes.description')}
             </p>
           </CardContent>
         </Card>
@@ -89,7 +92,7 @@ const NotesPage: React.FC<PageProps<{ allMdx: { nodes: Note[] } }>> = ({ data })
                 <CardFooter>
                   <Link to={`/notes/${slug}`} className="w-full">
                     <Button variant="outline" className="w-full">
-                      Read more
+                      {t('common.readMore')}
                     </Button>
                   </Link>
                 </CardFooter>
@@ -103,7 +106,16 @@ const NotesPage: React.FC<PageProps<{ allMdx: { nodes: Note[] } }>> = ({ data })
 }
 
 export const query = graphql`
-  query {
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
     allMdx(
       filter: { internal: { contentFilePath: { regex: "/content/notion/" } } }
       sort: { internal: { contentFilePath: ASC } }

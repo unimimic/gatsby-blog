@@ -9,6 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Search, ExternalLink, Code, Palette, Briefcase, Laptop } from "lucide-react"
+import { useTranslation } from "gatsby-plugin-react-i18next"
+import { graphql } from "gatsby"
 
 // 資源數據
 const resources = [
@@ -55,7 +57,7 @@ const resources = [
 
 
 // 獲取所有唯一的類別
-const categories = Array.from(new Set(resources.map(resource => resource.category)))
+const categories = ["Development", "Design", "Productivity", "AI", "Tools", "Security"]
 
 // 類別圖標映射
 const categoryIcons = {
@@ -65,11 +67,11 @@ const categoryIcons = {
   Security: Code,
   Design: Palette,
   Productivity: Briefcase,
-  // Marketing: BarChart,
   All: Laptop
 }
 
 const ResourceCard: React.FC<{ resource: typeof resources[0] }> = ({ resource }) => {
+  const { t } = useTranslation()
   const Icon = resource.icon
   return (
     <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
@@ -83,11 +85,11 @@ const ResourceCard: React.FC<{ resource: typeof resources[0] }> = ({ resource })
             <Button variant="ghost" size="icon" asChild>
               <a href={resource.url} target="_blank" rel="noopener noreferrer">
                 <ExternalLink className="h-4 w-4" />
-                <span className="sr-only">Visit {resource.name}</span>
+                <span className="sr-only">{t('resources.visitSite', { name: resource.name })}</span>
               </a>
             </Button>
           </CardTitle>
-          <CardDescription>{resource.category}</CardDescription>
+          <CardDescription>{t(`resources.categories.${resource.category.toLowerCase()}`)}</CardDescription>
         </CardHeader>
         <CardContent>
           <p>{resource.description}</p>
@@ -98,6 +100,7 @@ const ResourceCard: React.FC<{ resource: typeof resources[0] }> = ({ resource })
 }
 
 const ResourcesPage: React.FC<PageProps> = () => {
+  const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState("")
   const [activeCategory, setActiveCategory] = useState("All")
 
@@ -108,21 +111,21 @@ const ResourcesPage: React.FC<PageProps> = () => {
   )
 
   return (
-    <Layout pageTitle="Useful Web Resources">
+    <Layout pageTitle={t('resources.pageTitle')}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="container mx-auto px-4 py-8"
       >
-        <h1 className="text-4xl font-bold mb-8 text-center">Web Resources</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center">{t('resources.pageTitle')}</h1>
         
         <div className="mb-8">
           <div className="relative">
             <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <Input
               type="text"
-              placeholder="Search resources..."
+              placeholder={t('resources.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
@@ -137,7 +140,7 @@ const ResourcesPage: React.FC<PageProps> = () => {
               return (
                 <TabsTrigger key={category} value={category} className="flex items-center gap-2">
                   <Icon className="h-4 w-4" />
-                  {category}
+                  {t(`resources.categories.${category.toLowerCase()}`)}
                 </TabsTrigger>
               )
             })}
@@ -151,7 +154,7 @@ const ResourcesPage: React.FC<PageProps> = () => {
         </div>
 
         {filteredResources.length === 0 && (
-          <p className="text-center text-gray-500 mt-8">No resources found. Try adjusting your search or category.</p>
+          <p className="text-center text-gray-500 mt-8">{t('resources.noResultsFound')}</p>
         )}
       </motion.div>
     </Layout>
@@ -159,5 +162,19 @@ const ResourcesPage: React.FC<PageProps> = () => {
 }
 
 export default ResourcesPage
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`
 
 export const Head: HeadFC = () => <SEO title="D.N. Resources" />

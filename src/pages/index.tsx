@@ -3,7 +3,8 @@ import { motion, useInView } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Layout from "@/components/layout"
 import { SEO } from "../components/seo"
-import { HeadFC } from "gatsby"
+import { HeadFC, PageProps, graphql } from "gatsby"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 
 const TechCard: React.FC<{ title: string; description: string; icon: React.ReactNode }> = ({ title, description, icon }) => (
   <motion.div
@@ -41,9 +42,11 @@ const AnimatedSection: React.FC<{ children: React.ReactNode }> = ({ children }) 
   );
 };
 
-const IndexPage = () => {
+const IndexPage: React.FC<PageProps> = () => {
+  const { t } = useTranslation()
+
   return (
-    <Layout pageTitle="Welcome to My Dynamic Tech Showcase">
+    <Layout pageTitle={t('home.hero.welcome')}>
       <section id="hero" className="min-h-screen flex items-center justify-center">
         <AnimatedSection>
           <div className="text-center">
@@ -53,7 +56,7 @@ const IndexPage = () => {
               transition={{ type: "spring", stiffness: 260, damping: 20 }}
               className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text"
             >
-              Dev Notes
+              {t('home.hero.title')}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -61,7 +64,7 @@ const IndexPage = () => {
               transition={{ delay: 0.5, duration: 0.5 }}
               className="text-xl md:text-2xl text-gray-600 mb-8"
             >
-              Dive into the world of development 
+              {t('home.hero.subtitle')}
             </motion.p>
           </div>
         </AnimatedSection>
@@ -69,17 +72,14 @@ const IndexPage = () => {
 
       <AnimatedSection>
         <section id="about" className="py-20">
-          <h2 className="text-4xl font-bold text-center mb-8">About This</h2>
+          <h2 className="text-4xl font-bold text-center mb-8">{t('home.about.title')}</h2>
           <Card>
             <CardHeader>
-              <CardTitle>Discover the Magic</CardTitle>
+              <CardTitle>{t('home.about.subtitle')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="mb-4">
-                This is a dynamic website showcasing technology and the development process, aimed at helping developers share their learning and growth.
-                <br/>
-                <br/>
-                Explore various tech stacks and learn how to apply them in real-world projects.
+              <p className="mb-4 whitespace-pre-line">
+                {t('home.about.description')}
               </p>
             </CardContent>
           </Card>
@@ -89,26 +89,26 @@ const IndexPage = () => {
 
       <AnimatedSection>
         <section id="tech-stack" className="py-20">
-          <h2 className="text-4xl font-bold text-center mb-8">Our Tech Stack</h2>
+          <h2 className="text-4xl font-bold text-center mb-8">{t('home.techStack.title')}</h2>
           <div className="grid md:grid-cols-2 gap-6">
           <TechCard
-              title="Gatsby"
-              description="A React-based framework that enables static site generation and provides a rich plugin ecosystem for optimizing performance."
+              title={t('home.techStack.gatsby.title')}
+              description={t('home.techStack.gatsby.description')}
               icon={<span className="text-2xl">🌌</span>}
             />
             <TechCard
-              title="shadcn/ui"
-              description="A collection of beautifully designed, accessible components for modern web applications"
+              title={t('home.techStack.shadcn.title')}
+              description={t('home.techStack.shadcn.description')}
               icon={<span className="text-2xl">🎨</span>}
             />
             <TechCard
-              title="TypeScript"
-              description="A typed superset of JavaScript that compiles to plain JavaScript, adding optional types"
+              title={t('home.techStack.typescript.title')}
+              description={t('home.techStack.typescript.description')}
               icon={<span className="text-2xl">📘</span>}
             />
             <TechCard
-              title="Framer Motion"
-              description="A production-ready motion library for React that makes it easy to create stunning animations"
+              title={t('home.techStack.framerMotion.title')}
+              description={t('home.techStack.framerMotion.description')}
               icon={<span className="text-2xl">✨</span>}
             />
           </div>
@@ -121,3 +121,17 @@ const IndexPage = () => {
 export default IndexPage
 
 export const Head: HeadFC = () => <SEO/>
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`

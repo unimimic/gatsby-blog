@@ -4,9 +4,10 @@ import Layout from '../components/layout'
 import { SEO } from '../components/seo'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Link } from 'gatsby'
+import { Link } from 'gatsby-plugin-react-i18next'
 import { MDXProvider } from "@mdx-js/react"
 import { components } from "@/components/mdx"
+import { useTranslation } from "gatsby-plugin-react-i18next"
 
 interface NotionNoteTemplateProps {
   data: {
@@ -37,6 +38,7 @@ interface NotionNoteTemplateProps {
 }
 
 const NotionNoteTemplate: React.FC<NotionNoteTemplateProps> = ({ data, children }) => {
+  const { t } = useTranslation()
   const currentNote = data.allMdx.nodes[0]
   
   // 從檔案路徑提取標題
@@ -63,9 +65,9 @@ const NotionNoteTemplate: React.FC<NotionNoteTemplateProps> = ({ data, children 
       <div className="max-w-4xl mx-auto">
         {/* 返回按鈕 */}
         <div className="mb-6">
-          <Link to="/notes">
+          <Link to="/notes" placeholder="" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <Button variant="outline">
-              ← 返回筆記列表
+              ← {t('common.backToNotes')}
             </Button>
           </Link>
         </div>
@@ -75,8 +77,8 @@ const NotionNoteTemplate: React.FC<NotionNoteTemplateProps> = ({ data, children 
           <CardHeader>
             {/* <CardTitle className="text-3xl text-center">{noteTitle}</CardTitle> */}
             {currentNote.frontmatter?.date && (
-              <p className="text-gray-500 dark:text-gray-400">
-                {currentNote.frontmatter.date}
+              <p className="text-gray-500 dark:text-gray-400 text-center">
+                {t('common.publishedOn')} {currentNote.frontmatter.date}
               </p>
             )}
           </CardHeader>
@@ -89,9 +91,9 @@ const NotionNoteTemplate: React.FC<NotionNoteTemplateProps> = ({ data, children 
 
         {/* 返回按鈕 */}
         <div className="mb-6">
-          <Link to="/notes">
+          <Link to="/notes" placeholder="" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
             <Button variant="outline">
-              ← 返回筆記列表
+              ← {t('common.backToNotes')}
             </Button>
           </Link>
         </div>
@@ -100,7 +102,7 @@ const NotionNoteTemplate: React.FC<NotionNoteTemplateProps> = ({ data, children 
         {/* {relatedNotes.length > 0 && (
           <Card>
             <CardHeader>
-              <CardTitle className="text-xl">📋 相關筆記</CardTitle>
+              <CardTitle className="text-xl">📋 {t('common.relatedNotes')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid gap-3">
@@ -123,6 +125,9 @@ const NotionNoteTemplate: React.FC<NotionNoteTemplateProps> = ({ data, children 
                       key={note.id} 
                       to={`/notes/${slug}`}
                       className="block p-3 rounded-lg border hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      placeholder="" 
+                      onPointerEnterCapture={undefined} 
+                      onPointerLeaveCapture={undefined}
                     >
                       <span className="font-medium">{title}</span>
                     </Link>
@@ -138,7 +143,16 @@ const NotionNoteTemplate: React.FC<NotionNoteTemplateProps> = ({ data, children 
 }
 
 export const query = graphql`
-  query($id: String!) {
+  query($id: String!, $language: String!) {
+    locales: allLocale(filter: {language: {eq: $language}}) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
     allMdx(filter: { id: { eq: $id } }) {
       nodes {
         frontmatter {

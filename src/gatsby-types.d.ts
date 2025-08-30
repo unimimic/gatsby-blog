@@ -360,11 +360,15 @@ type File = Node & {
   readonly blksize: Maybe<Scalars['Int']>;
   readonly blocks: Maybe<Scalars['Int']>;
   readonly changeTime: Scalars['Date'];
+  /** Returns the first child node of type Locale or null if there are no children of given type on this node */
+  readonly childLocale: Maybe<Locale>;
   /** Returns the first child node of type MarkdownRemark or null if there are no children of given type on this node */
   readonly childMarkdownRemark: Maybe<MarkdownRemark>;
   /** Returns the first child node of type Mdx or null if there are no children of given type on this node */
   readonly childMdx: Maybe<Mdx>;
   readonly children: ReadonlyArray<Node>;
+  /** Returns all children nodes filtered by type Locale */
+  readonly childrenLocale: Maybe<ReadonlyArray<Maybe<Locale>>>;
   /** Returns all children nodes filtered by type MarkdownRemark */
   readonly childrenMarkdownRemark: Maybe<ReadonlyArray<Maybe<MarkdownRemark>>>;
   /** Returns all children nodes filtered by type Mdx */
@@ -511,9 +515,11 @@ type FileFieldSelector = {
   readonly blksize: InputMaybe<FieldSelectorEnum>;
   readonly blocks: InputMaybe<FieldSelectorEnum>;
   readonly changeTime: InputMaybe<FieldSelectorEnum>;
+  readonly childLocale: InputMaybe<LocaleFieldSelector>;
   readonly childMarkdownRemark: InputMaybe<MarkdownRemarkFieldSelector>;
   readonly childMdx: InputMaybe<MdxFieldSelector>;
   readonly children: InputMaybe<NodeFieldSelector>;
+  readonly childrenLocale: InputMaybe<LocaleFieldSelector>;
   readonly childrenMarkdownRemark: InputMaybe<MarkdownRemarkFieldSelector>;
   readonly childrenMdx: InputMaybe<MdxFieldSelector>;
   readonly ctime: InputMaybe<FieldSelectorEnum>;
@@ -556,9 +562,11 @@ type FileFilterInput = {
   readonly blksize: InputMaybe<IntQueryOperatorInput>;
   readonly blocks: InputMaybe<IntQueryOperatorInput>;
   readonly changeTime: InputMaybe<DateQueryOperatorInput>;
+  readonly childLocale: InputMaybe<LocaleFilterInput>;
   readonly childMarkdownRemark: InputMaybe<MarkdownRemarkFilterInput>;
   readonly childMdx: InputMaybe<MdxFilterInput>;
   readonly children: InputMaybe<NodeFilterListInput>;
+  readonly childrenLocale: InputMaybe<LocaleFilterListInput>;
   readonly childrenMarkdownRemark: InputMaybe<MarkdownRemarkFilterListInput>;
   readonly childrenMdx: InputMaybe<MdxFilterListInput>;
   readonly ctime: InputMaybe<DateQueryOperatorInput>;
@@ -642,9 +650,11 @@ type FileSortInput = {
   readonly blksize: InputMaybe<SortOrderEnum>;
   readonly blocks: InputMaybe<SortOrderEnum>;
   readonly changeTime: InputMaybe<SortOrderEnum>;
+  readonly childLocale: InputMaybe<LocaleSortInput>;
   readonly childMarkdownRemark: InputMaybe<MarkdownRemarkSortInput>;
   readonly childMdx: InputMaybe<MdxSortInput>;
   readonly children: InputMaybe<NodeSortInput>;
+  readonly childrenLocale: InputMaybe<LocaleSortInput>;
   readonly childrenMarkdownRemark: InputMaybe<MarkdownRemarkSortInput>;
   readonly childrenMdx: InputMaybe<MdxSortInput>;
   readonly ctime: InputMaybe<SortOrderEnum>;
@@ -752,6 +762,140 @@ type JSONQueryOperatorInput = {
   readonly ne: InputMaybe<Scalars['JSON']>;
   readonly nin: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']>>>;
   readonly regex: InputMaybe<Scalars['JSON']>;
+};
+
+type Locale = Node & {
+  readonly children: ReadonlyArray<Node>;
+  readonly data: Maybe<Scalars['String']>;
+  readonly fileAbsolutePath: Maybe<Scalars['String']>;
+  readonly id: Scalars['ID'];
+  readonly internal: Internal;
+  readonly language: Maybe<Scalars['String']>;
+  readonly ns: Maybe<Scalars['String']>;
+  readonly parent: Maybe<Node>;
+};
+
+type LocaleConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<LocaleEdge>;
+  readonly group: ReadonlyArray<LocaleGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<Locale>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type LocaleConnection_distinctArgs = {
+  field: LocaleFieldSelector;
+};
+
+
+type LocaleConnection_groupArgs = {
+  field: LocaleFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type LocaleConnection_maxArgs = {
+  field: LocaleFieldSelector;
+};
+
+
+type LocaleConnection_minArgs = {
+  field: LocaleFieldSelector;
+};
+
+
+type LocaleConnection_sumArgs = {
+  field: LocaleFieldSelector;
+};
+
+type LocaleEdge = {
+  readonly next: Maybe<Locale>;
+  readonly node: Locale;
+  readonly previous: Maybe<Locale>;
+};
+
+type LocaleFieldSelector = {
+  readonly children: InputMaybe<NodeFieldSelector>;
+  readonly data: InputMaybe<FieldSelectorEnum>;
+  readonly fileAbsolutePath: InputMaybe<FieldSelectorEnum>;
+  readonly id: InputMaybe<FieldSelectorEnum>;
+  readonly internal: InputMaybe<InternalFieldSelector>;
+  readonly language: InputMaybe<FieldSelectorEnum>;
+  readonly ns: InputMaybe<FieldSelectorEnum>;
+  readonly parent: InputMaybe<NodeFieldSelector>;
+};
+
+type LocaleFilterInput = {
+  readonly children: InputMaybe<NodeFilterListInput>;
+  readonly data: InputMaybe<StringQueryOperatorInput>;
+  readonly fileAbsolutePath: InputMaybe<StringQueryOperatorInput>;
+  readonly id: InputMaybe<StringQueryOperatorInput>;
+  readonly internal: InputMaybe<InternalFilterInput>;
+  readonly language: InputMaybe<StringQueryOperatorInput>;
+  readonly ns: InputMaybe<StringQueryOperatorInput>;
+  readonly parent: InputMaybe<NodeFilterInput>;
+};
+
+type LocaleFilterListInput = {
+  readonly elemMatch: InputMaybe<LocaleFilterInput>;
+};
+
+type LocaleGroupConnection = {
+  readonly distinct: ReadonlyArray<Scalars['String']>;
+  readonly edges: ReadonlyArray<LocaleEdge>;
+  readonly field: Scalars['String'];
+  readonly fieldValue: Maybe<Scalars['String']>;
+  readonly group: ReadonlyArray<LocaleGroupConnection>;
+  readonly max: Maybe<Scalars['Float']>;
+  readonly min: Maybe<Scalars['Float']>;
+  readonly nodes: ReadonlyArray<Locale>;
+  readonly pageInfo: PageInfo;
+  readonly sum: Maybe<Scalars['Float']>;
+  readonly totalCount: Scalars['Int'];
+};
+
+
+type LocaleGroupConnection_distinctArgs = {
+  field: LocaleFieldSelector;
+};
+
+
+type LocaleGroupConnection_groupArgs = {
+  field: LocaleFieldSelector;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+};
+
+
+type LocaleGroupConnection_maxArgs = {
+  field: LocaleFieldSelector;
+};
+
+
+type LocaleGroupConnection_minArgs = {
+  field: LocaleFieldSelector;
+};
+
+
+type LocaleGroupConnection_sumArgs = {
+  field: LocaleFieldSelector;
+};
+
+type LocaleSortInput = {
+  readonly children: InputMaybe<NodeSortInput>;
+  readonly data: InputMaybe<SortOrderEnum>;
+  readonly fileAbsolutePath: InputMaybe<SortOrderEnum>;
+  readonly id: InputMaybe<SortOrderEnum>;
+  readonly internal: InputMaybe<InternalSortInput>;
+  readonly language: InputMaybe<SortOrderEnum>;
+  readonly ns: InputMaybe<SortOrderEnum>;
+  readonly parent: InputMaybe<NodeSortInput>;
 };
 
 type MarkdownExcerptFormats =
@@ -1293,6 +1437,7 @@ type PageInfo = {
 type Query = {
   readonly allDirectory: DirectoryConnection;
   readonly allFile: FileConnection;
+  readonly allLocale: LocaleConnection;
   readonly allMarkdownRemark: MarkdownRemarkConnection;
   readonly allMdx: MdxConnection;
   readonly allSite: SiteConnection;
@@ -1302,6 +1447,7 @@ type Query = {
   readonly allSitePlugin: SitePluginConnection;
   readonly directory: Maybe<Directory>;
   readonly file: Maybe<File>;
+  readonly locale: Maybe<Locale>;
   readonly markdownRemark: Maybe<MarkdownRemark>;
   readonly mdx: Maybe<Mdx>;
   readonly site: Maybe<Site>;
@@ -1325,6 +1471,14 @@ type Query_allFileArgs = {
   limit: InputMaybe<Scalars['Int']>;
   skip: InputMaybe<Scalars['Int']>;
   sort: InputMaybe<ReadonlyArray<InputMaybe<FileSortInput>>>;
+};
+
+
+type Query_allLocaleArgs = {
+  filter: InputMaybe<LocaleFilterInput>;
+  limit: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
+  sort: InputMaybe<ReadonlyArray<InputMaybe<LocaleSortInput>>>;
 };
 
 
@@ -1435,9 +1589,11 @@ type Query_fileArgs = {
   blksize: InputMaybe<IntQueryOperatorInput>;
   blocks: InputMaybe<IntQueryOperatorInput>;
   changeTime: InputMaybe<DateQueryOperatorInput>;
+  childLocale: InputMaybe<LocaleFilterInput>;
   childMarkdownRemark: InputMaybe<MarkdownRemarkFilterInput>;
   childMdx: InputMaybe<MdxFilterInput>;
   children: InputMaybe<NodeFilterListInput>;
+  childrenLocale: InputMaybe<LocaleFilterListInput>;
   childrenMarkdownRemark: InputMaybe<MarkdownRemarkFilterListInput>;
   childrenMdx: InputMaybe<MdxFilterListInput>;
   ctime: InputMaybe<DateQueryOperatorInput>;
@@ -1466,6 +1622,18 @@ type Query_fileArgs = {
   size: InputMaybe<IntQueryOperatorInput>;
   sourceInstanceName: InputMaybe<StringQueryOperatorInput>;
   uid: InputMaybe<IntQueryOperatorInput>;
+};
+
+
+type Query_localeArgs = {
+  children: InputMaybe<NodeFilterListInput>;
+  data: InputMaybe<StringQueryOperatorInput>;
+  fileAbsolutePath: InputMaybe<StringQueryOperatorInput>;
+  id: InputMaybe<StringQueryOperatorInput>;
+  internal: InputMaybe<InternalFilterInput>;
+  language: InputMaybe<StringQueryOperatorInput>;
+  ns: InputMaybe<StringQueryOperatorInput>;
+  parent: InputMaybe<NodeFilterInput>;
 };
 
 
@@ -2353,10 +2521,11 @@ type StringQueryOperatorInput = {
 
 type PostTemplateQueryVariables = Exact<{
   id: Scalars['String'];
+  language: Scalars['String'];
 }>;
 
 
-type PostTemplateQuery = { readonly allMdx: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly date: string | null, readonly title: string | null } | null }> } };
+type PostTemplateQuery = { readonly locales: { readonly edges: ReadonlyArray<{ readonly node: { readonly ns: string | null, readonly data: string | null, readonly language: string | null } }> }, readonly allMdx: { readonly nodes: ReadonlyArray<{ readonly frontmatter: { readonly date: string | null, readonly title: string | null } | null }> } };
 
 type GetAllMdxQueryVariables = Exact<{ [key: string]: never; }>;
 
