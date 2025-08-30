@@ -33,13 +33,13 @@ const LanguageSelector: React.FC = () => {
 
   return (
     <div className="flex items-center space-x-2">
-      <Globe className="h-4 w-4 text-gray-500" />
+      <Globe className="h-4 w-4 text-gray-500 hidden sm:block" />
       <Select value={i18n.language} onValueChange={handleLanguageChange}>
-        <SelectTrigger className="w-32 h-8 text-sm">
+        <SelectTrigger className="w-24 sm:w-32 h-8 text-sm">
           <SelectValue>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1 sm:space-x-2">
               <span>{currentLanguage?.flag}</span>
-              <span>{currentLanguage?.name}</span>
+              <span className="hidden sm:inline">{currentLanguage?.name}</span>
             </div>
           </SelectValue>
         </SelectTrigger>
